@@ -1,33 +1,26 @@
 language:
-  - cpp
-
+- cpp
 before_install:
-  - pip install --user cpp-coveralls
+- pip install --user cpp-coveralls
 addons:
   sonarcloud:
-    organization: "groypyspoopyboi"
+    organization: groypyspoopyboi
     token:
-      secure: "EbZ41ytNTRX0NeKYvLilmXYbLgJf8cZLfjIDlRBVbhvzWYLjBW99kMNoZi5FRp52YYnAPxwArVx/+Od5n3JEZfCbuwUmy5Hwgcr9E1Yfnm+wVZ2OgTRC55s8+NYpqskK4mj5afl/aL6pzEKY9uZbiD/MrLGrJ0JURWmCBC2h0hZlZgQV7u80YF956dfGgC4Fqmc3zH9vPV+qQ5nzVV4zZWgmafSDJ3pKp1VJjRaQ8ebXIPn9CvG/aqRZwrPPUP8CWu2EO7mfve0zjNZcemYF92zLmSdCQYpbhB8Fs34HGf43ZXBhCyGG8ephTEMWEmaz1inpyo0CdbyuPb47SJhj6HAE/zZINA60t0G+eDl0Duk77I3zlUqupNH3z7G8M122nP+Ues9JPCH2h8gPrCfbBQLkzWFZ1dNelDyt06lFkT5NBC2wbTSh3Z/nRfPomEMjsnaawmODrx5e0eu3iI/wA39XglKD+cCAZH/2Wre63TLY2iOhG66v5gqQwMc9wZlFr63ZaV3R1vfcgmFAtn7czZ0k2GH4f3eYTBy1L8kLzfL9C3EWhE7+oIR2g3zAcUp5HFamSy6oui/PybZNDtFZVAHjIRhA3JFxaAcRjTQjvzr1RoF3AedKGOiJP03Xfa/7DLp6vOUZB6bIehL5GAOUXUT4NskmDxLAYdxQPEP2SiQ=" # encrypted value of your token
-      
+      secure: EbZ41ytNTRX0NeKYvLilmXYbLgJf8cZLfjIDlRBVbhvzWYLjBW99kMNoZi5FRp52YYnAPxwArVx/+Od5n3JEZfCbuwUmy5Hwgcr9E1Yfnm+wVZ2OgTRC55s8+NYpqskK4mj5afl/aL6pzEKY9uZbiD/MrLGrJ0JURWmCBC2h0hZlZgQV7u80YF956dfGgC4Fqmc3zH9vPV+qQ5nzVV4zZWgmafSDJ3pKp1VJjRaQ8ebXIPn9CvG/aqRZwrPPUP8CWu2EO7mfve0zjNZcemYF92zLmSdCQYpbhB8Fs34HGf43ZXBhCyGG8ephTEMWEmaz1inpyo0CdbyuPb47SJhj6HAE/zZINA60t0G+eDl0Duk77I3zlUqupNH3z7G8M122nP+Ues9JPCH2h8gPrCfbBQLkzWFZ1dNelDyt06lFkT5NBC2wbTSh3Z/nRfPomEMjsnaawmODrx5e0eu3iI/wA39XglKD+cCAZH/2Wre63TLY2iOhG66v5gqQwMc9wZlFr63ZaV3R1vfcgmFAtn7czZ0k2GH4f3eYTBy1L8kLzfL9C3EWhE7+oIR2g3zAcUp5HFamSy6oui/PybZNDtFZVAHjIRhA3JFxaAcRjTQjvzr1RoF3AedKGOiJP03Xfa/7DLp6vOUZB6bIehL5GAOUXUT4NskmDxLAYdxQPEP2SiQ=
 script:
-  - qmake
-  - make
-  - ./tests/tests
-  
+- qmake
+- make
+- "./tests/tests"
 after_success:
-  - coveralls --root . -E ".*external.*" -E ".*tests.*"
-  # Wraps the compilation with the Build Wrapper to generate configuration (used
-  # later by the SonarScanner) into the "bw-output" folder
-  - build-wrapper-linux-x86-64 --out-dir bw-output make clean all
-  # And finally run the SonarCloud analysis - read the "sonar-project.properties"
-  # file to see the specific configuration
-  - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
-
+- coveralls --root . -E ".*external.*" -E ".*tests.*"
+- build-wrapper-linux-x86-64 --out-dir bw-output make clean all
+- sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
 cache:
   directories:
-  - '$HOME/.m2/repository'
-  - '$HOME/.sonar/cache'
-
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"
 notifications:
   email: false
-  
+env:
+  global:
+    secure: fo5/7vIkWQI+EoLOIhRhswPd9BzRnqyktQnaxcIL6kvD/Jnl2q3MTGrVQHruN50elhBWpu3nQ4h/NGQbe8S4N0e2xBNyXm+9dYqLJlLUSNZBNTfy6tLJ0zW+b0ZDzhUkFXBdc9B8wGMUcpjqptopH2FR66gODSy8EJjjjs0Fux0m7MKo5VsIDCc70+aUC7EuvZfRD25bepNPuOuSJtGOQb6SJ3xCQhCGaQVaw0/4QO6r3iAt3edFtjX1d7maObtRfInuZLWok5gfyewAXA2wpRdjxMaRSqNgW8vBrnXMc4KYTZrAwef+65aVwXbBaMdn/C2wzP3ZN7qZNqW4C7108mzc1SpSyqLpnSk60oYAw1qFNV3ORmCTI6pcz3hy/4UznSNbFo+YAIe8cJiQBv2HtdZamRWGylFXsfg/T4N2w/SdTyBA4BbseM9NhFoKJY6TsilC/PE8XTh3IRSELe7HYiIh0gotLJtowq4NC80jKilba9Rryaj3rdazjgC1GUyBEHIN8Ez+5Mc09/j+6qb2BcbodZWZ8wHZrloF4VimkEEOvOiGb8vWdDbiUxYGTTCQe/D0pVH3coc55qIMDHnJC7fcBVWHkyDLKIS6gPPPM6ULQfb3xnyPdGWpXIuGsA5IBCTq8uJ3o/Lo2yzp23lpAYz2z04O7rJzlZznH2+M/b0=
