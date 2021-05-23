@@ -7,10 +7,6 @@ language:
 
 before_install:
   - pip install --user cpp-coveralls
-addons:
-  sonarcloud:
-    organization: "deadman23ru"
-    token: $SONAR_TOKEN
 
 script:
   - qmake
